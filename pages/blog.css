@@ -1,0 +1,11 @@
+.post{
+    min-width: 50%;
+    margin-left: 500px;
+    margin-right: 500px;
+    padding: 40px;
+}
+.blogimg{
+    max-height: 40vh;
+    display: block;
+    margin: auto;
+}
