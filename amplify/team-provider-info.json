@@ -10,6 +10,11 @@
       "StackName": "amplify-amplifiedwebsite-dev-143212",
       "StackId": "arn:aws:cloudformation:us-west-2:003232253956:stack/amplify-amplifiedwebsite-dev-143212/0f2751d0-d109-11ee-a51b-0a365b00087b",
       "AmplifyAppId": "d3lyv1nszgr6h3"
+    },
+    "categories": {
+      "function": {
+        "grocfunc": {}
+      }
     }
   }
 }

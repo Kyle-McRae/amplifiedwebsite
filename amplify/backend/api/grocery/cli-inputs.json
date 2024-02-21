@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/groc": {
+      "name": "/groc",
+      "lambdaFunction": "grocfunc",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
