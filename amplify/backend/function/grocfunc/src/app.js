@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License"). You may not use 
 or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 */
-
+var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 
 
@@ -31,8 +31,23 @@ app.use(function(req, res, next) {
  **********************/
 
 app.get('/groc', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  // Add your code here 
+var params = {
+  Item: {
+    "Name": {
+      S: "Eggs"
+     }, 
+    "Quantity": {
+      N: "12"
+     },
+   },
+   TableName: "Music"
+  };
+  dynamodb.putItem(params, function(err, data) {
+    if (err) console.log(err, err.stack); // an error occurred
+    else     console.log(data);           // successful response
+  });
+  res.json({success: 'get call succeed hi anson hi anson hi anson', url: req.url});
 });
 
 app.get('/groc/*', function(req, res) {

@@ -13,7 +13,13 @@
     },
     "categories": {
       "function": {
-        "grocfunc": {}
+        "grocfunc": {
+          "deploymentBucketName": "amplify-amplifiedwebsite-dev-143212-deployment",
+          "s3Key": "amplify-builds/grocfunc-656648336949756f4167-build.zip"
+        }
+      },
+      "api": {
+        "grocery": {}
       }
     }
   }

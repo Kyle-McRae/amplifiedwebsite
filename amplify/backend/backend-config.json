@@ -21,5 +21,23 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
+  },
+  "parameters": {
+    "AMPLIFY_function_grocfunc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "grocfunc"
+        }
+      ]
+    },
+    "AMPLIFY_function_grocfunc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "grocfunc"
+        }
+      ]
+    }
   }
 }
