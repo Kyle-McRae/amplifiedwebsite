@@ -5,7 +5,10 @@ Licensed under the Apache License, Version 2.0 (the "License"). You may not use 
 or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 */
-var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+
+const { DynamoDBClient, PutItemCommand, Scan } = require("@aws-sdk/client-dynamodb");
+
+const dynamo = new DynamoDBClient();
 
 
 
@@ -30,24 +33,11 @@ app.use(function(req, res, next) {
  * Example get method *
  **********************/
 
-app.get('/groc', function(req, res) {
+app.get('/groc', async function(req, res) {
   // Add your code here 
-var params = {
-  Item: {
-    "Name": {
-      S: "Eggs"
-     }, 
-    "Quantity": {
-      N: "12"
-     },
-   },
-   TableName: "Music"
-  };
-  dynamodb.putItem(params, function(err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
-    else     console.log(data);           // successful response
-  });
-  res.json({success: 'get call succeed hi anson hi anson hi anson', url: req.url});
+  const command = new PutItemCommand(params);
+  const response = await dynamo.send(command);
+  res.json({reponse: response, url: req.url});
 });
 
 app.get('/groc/*', function(req, res) {
@@ -59,9 +49,23 @@ app.get('/groc/*', function(req, res) {
 * Example post method *
 ****************************/
 
-app.post('/groc', function(req, res) {
+app.post('/groc', async function(req, res) {
   // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+  // Add your code here 
+var params = {
+  Item: {
+    "Name": {
+      S: "Eggs"
+     }, 
+    "Quantity": {
+      N: "12"
+     },
+   },
+   TableName: "Grocery"
+  };
+  const command = new PutItemCommand(params);
+  const response = await dynamo.send(command);
+  res.json({reponse: response, url: req.url});
 });
 
 app.post('/groc/*', function(req, res) {

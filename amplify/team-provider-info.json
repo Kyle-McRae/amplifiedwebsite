@@ -15,7 +15,7 @@
       "function": {
         "grocfunc": {
           "deploymentBucketName": "amplify-amplifiedwebsite-dev-143212-deployment",
-          "s3Key": "amplify-builds/grocfunc-656648336949756f4167-build.zip"
+          "s3Key": "amplify-builds/grocfunc-4e2f5a6f4f536f464564-build.zip"
         }
       },
       "api": {
