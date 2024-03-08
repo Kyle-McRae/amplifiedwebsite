@@ -6,7 +6,7 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-const { DynamoDBClient, PutItemCommand, Scan } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBClient, PutItemCommand, ScanCommand } = require("@aws-sdk/client-dynamodb");
 
 const dynamo = new DynamoDBClient();
 
@@ -34,8 +34,10 @@ app.use(function(req, res, next) {
  **********************/
 
 app.get('/groc', async function(req, res) {
-  // Add your code here 
-  const command = new PutItemCommand(params);
+  var params = {
+    TableName: "Grocery"
+  }
+  const command = new ScanCommand(params);
   const response = await dynamo.send(command);
   res.json({reponse: response, url: req.url});
 });
@@ -49,9 +51,7 @@ app.get('/groc/*', function(req, res) {
 * Example post method *
 ****************************/
 
-app.post('/groc', async function(req, res) {
-  // Add your code here
-  // Add your code here 
+app.post('/groc', async function(req, res) { 
 var params = {
   Item: {
     "Name": {
