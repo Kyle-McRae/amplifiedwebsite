@@ -13,9 +13,9 @@ const Home = () => {
         </p>
         <div className="links">
           <div className="lynk" >
-            <a href="https://github.com/Kyle-McRae">Github</a>
+            <a href="https://github.com/Kyle-McRae" target="_blank" rel="noopener noreferrer" >Github</a>
           </div><div className="lynk" >
-            <a href="https://www.linkedin.com/in/kyle-mcrae-11468419b/">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/kyle-mcrae-11468419b/" target="_blank" rel="noopener noreferrer" >LinkedIn</a>
           </div>
         </div>
       </div>
