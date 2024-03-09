@@ -1,8 +1,7 @@
 .post{
-    min-width: 50%;
-    margin-left: 500px;
-    margin-right: 500px;
-    padding: 40px;
+    margin: auto;
+    width: 40%;
+    padding: 10px;
 }
 .blogimg{
     max-height: 40vh;

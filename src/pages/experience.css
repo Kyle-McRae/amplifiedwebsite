@@ -1,5 +1,5 @@
 .job{
-    min-width: 50%;
-    margin-left: 500px;
-    margin-right: 500px;
+    margin: auto;
+    width: 60%;
+    padding: 10px;
 }
