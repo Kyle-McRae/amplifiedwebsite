@@ -39,7 +39,7 @@ app.get('/groc', async function(req, res) {
   }
   const command = new ScanCommand(params);
   const response = await dynamo.send(command);
-  res.json({reponse: response, url: req.url});
+  res.json(response.Items);
 });
 
 app.get('/groc/*', function(req, res) {
@@ -51,7 +51,8 @@ app.get('/groc/*', function(req, res) {
 * Example post method *
 ****************************/
 
-app.post('/groc', async function(req, res) { 
+app.post('/groc', async function(req, res) {
+console.log(req)
 var params = {
   Item: {
     "Name": {
@@ -65,7 +66,7 @@ var params = {
   };
   const command = new PutItemCommand(params);
   const response = await dynamo.send(command);
-  res.json({reponse: response, url: req.url});
+  res.json({response: response, url: req.url});
 });
 
 app.post('/groc/*', function(req, res) {
