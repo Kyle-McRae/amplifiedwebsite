@@ -5,7 +5,10 @@ Licensed under the Apache License, Version 2.0 (the "License"). You may not use 
 or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 */
-var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+
+const { DynamoDBClient, PutItemCommand, ScanCommand, DeleteItemCommand } = require("@aws-sdk/client-dynamodb");
+
+const dynamo = new DynamoDBClient();
 
 
 
@@ -30,38 +33,50 @@ app.use(function(req, res, next) {
  * Example get method *
  **********************/
 
-app.get('/groc', function(req, res) {
-  // Add your code here 
-var params = {
-  Item: {
-    "Name": {
-      S: "Eggs"
-     }, 
-    "Quantity": {
-      N: "12"
-     },
-   },
-   TableName: "Music"
-  };
-  dynamodb.putItem(params, function(err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
-    else     console.log(data);           // successful response
-  });
-  res.json({success: 'get call succeed hi anson hi anson hi anson', url: req.url});
+app.get('/groc', async function(req, res) {
+  var params = {
+    TableName: "Grocery"
+  }
+  const command = new ScanCommand(params);
+  const response = await dynamo.send(command);
+  res.json(response.Items);
 });
 
-app.get('/groc/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+app.get('/groc/:grocName', async function(req, res) {
+var grocName = req.params.grocName;
+var params = {
+  Key: {
+    "Name": {
+      S: grocName
+     },
+   },
+   TableName: "Grocery"
+  };
+  const command = new DeleteItemCommand(params);
+  const response = await dynamo.send(command);
+  res.json({response: response, url: req.url});
 });
 
 /****************************
 * Example post method *
 ****************************/
 
-app.post('/groc', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+app.post('/groc', async function(req, res) {
+var newGrocData = req.body.newGrocData;
+var params = {
+  Item: {
+    "Name": {
+      S: newGrocData.name
+     }, 
+    "Quantity": {
+      N: newGrocData.quantity
+     },
+   },
+   TableName: "Grocery"
+  };
+  const command = new PutItemCommand(params);
+  const response = await dynamo.send(command);
+  res.json({response: response, url: req.url});
 });
 
 app.post('/groc/*', function(req, res) {
@@ -92,10 +107,20 @@ app.delete('/groc', function(req, res) {
   res.json({success: 'delete call succeed!', url: req.url});
 });
 
-app.delete('/groc/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
+app.delete('/groc/:grocName', async function(req, res) {
+  var grocName = req.params.grocName;
+  var params = {
+    Key: {
+      "Name": {
+        S: grocName
+       },
+     },
+     TableName: "Grocery"
+    };
+    const command = new DeleteItemCommand(params);
+    const response = await dynamo.send(command);
+    res.json({response: response, url: req.url});
+  });
 
 app.listen(3000, function() {
     console.log("App started")
