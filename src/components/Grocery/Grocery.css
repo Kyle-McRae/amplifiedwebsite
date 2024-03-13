@@ -1,0 +1,17 @@
+.name{
+    width: 40%;
+    display: inline-block;
+    margin: auto;
+}
+.qty{
+    width: 40%;
+    display: inline-block;
+    text-align: right;
+    margin: auto;
+}
+.delete{
+    border-style:solid;
+    width:5%;
+    display: inline-block;
+    margin-left: 5%;
+}

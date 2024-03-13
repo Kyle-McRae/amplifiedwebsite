@@ -1,6 +1,6 @@
 import React from 'react';
 import './list.css'
-import GrocList from '../components/Navbar/GrocList';
+import GrocList from '../components/Grocery/GrocList';
 const List = () => {
   return (
     <GrocList/> 

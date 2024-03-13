@@ -6,7 +6,7 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-const { DynamoDBClient, PutItemCommand, ScanCommand } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBClient, PutItemCommand, ScanCommand, DeleteItemCommand } = require("@aws-sdk/client-dynamodb");
 
 const dynamo = new DynamoDBClient();
 
@@ -42,9 +42,19 @@ app.get('/groc', async function(req, res) {
   res.json(response.Items);
 });
 
-app.get('/groc/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+app.get('/groc/:grocName', async function(req, res) {
+var grocName = req.params.grocName;
+var params = {
+  Key: {
+    "Name": {
+      S: grocName
+     },
+   },
+   TableName: "Grocery"
+  };
+  const command = new DeleteItemCommand(params);
+  const response = await dynamo.send(command);
+  res.json({response: response, url: req.url});
 });
 
 /****************************
@@ -52,14 +62,14 @@ app.get('/groc/*', function(req, res) {
 ****************************/
 
 app.post('/groc', async function(req, res) {
-console.log(req)
+var newGrocData = req.body.newGrocData;
 var params = {
   Item: {
     "Name": {
-      S: "Eggs"
+      S: newGrocData.name
      }, 
     "Quantity": {
-      N: "12"
+      N: newGrocData.quantity
      },
    },
    TableName: "Grocery"
@@ -97,10 +107,20 @@ app.delete('/groc', function(req, res) {
   res.json({success: 'delete call succeed!', url: req.url});
 });
 
-app.delete('/groc/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
+app.delete('/groc/:grocName', async function(req, res) {
+  var grocName = req.params.grocName;
+  var params = {
+    Key: {
+      "Name": {
+        S: grocName
+       },
+     },
+     TableName: "Grocery"
+    };
+    const command = new DeleteItemCommand(params);
+    const response = await dynamo.send(command);
+    res.json({response: response, url: req.url});
+  });
 
 app.listen(3000, function() {
     console.log("App started")
