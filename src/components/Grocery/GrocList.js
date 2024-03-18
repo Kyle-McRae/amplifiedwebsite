@@ -7,7 +7,8 @@ export default class GrocList extends React.Component {
   state = {
     groceries: [],
     newGroc: '',
-    qty: '',
+    qty: 0,
+    error: '',
   }
 
   handleChange = event => {
@@ -17,18 +18,41 @@ export default class GrocList extends React.Component {
     this.setState({ qty: event.target.value })
   }
 
+  handleDelete = name => 
+    event => {
+      this.setState({ groceries: this.state.groceries.filter(grocery => grocery.Name.S != name) });
+
+      axios.delete('https://hjj41fkxn9.execute-api.us-west-2.amazonaws.com/dev/groc/' + name)
+        .then(res => {
+        }).catch(err => {
+          console.log(err);
+        });
+  }
+
   handleSubmit = async event => {
     event.preventDefault();
     const newGrocData = {
       name: this.state.newGroc,
       quantity: this.state.qty,
     }
-    axios.post('https://hjj41fkxn9.execute-api.us-west-2.amazonaws.com/dev/groc', {newGrocData})
+    axios.post('https://hjj41fkxn9.execute-api.us-west-2.amazonaws.com/dev/groc', { newGrocData })
       .then(res => {
-      }).catch(err =>{
+        let inList = false;
+        let grocList = this.state.groceries;
+        for (let grocery of grocList) {
+          if (grocery.Name.S === this.state.newGroc) {
+            grocery.Quantity.N = this.state.qty;
+            this.setState({ groceries: grocList })
+            inList = true;
+          }
+        }
+        if (!inList) {
+          this.setState({ groceries: this.state.groceries.concat({ "Name": { "S": this.state.newGroc }, "Quantity": { "N": this.state.qty } }) })
+        }
+      }).catch(err => {
         console.log(err);
       });
-    this.setState({ groceries: this.state.groceries.concat({"Name":{"S": this.state.newGroc}, "Quantity": {"N": this.state.qty}}) })
+
   }
 
   componentDidMount() {
@@ -43,12 +67,12 @@ export default class GrocList extends React.Component {
     return (
       <div className="fulllist">
         <div className="list">
-        {
-        this.state.groceries
-        .map(grocery =>
-          <Grocery grocery={grocery} ></Grocery>
-        )
-        }
+          {
+            this.state.groceries
+              .map(grocery =>
+                <Grocery grocery={grocery} del={this.handleDelete}></Grocery>
+              )
+          }
         </div>
         <form onSubmit={this.handleSubmit}>
           <label>
@@ -56,11 +80,11 @@ export default class GrocList extends React.Component {
             <input type="text" name="name" onChange={this.handleChange} />
           </label>
           <label htmlFor="qty">Quantity</label>
-          <input type="number" id="qty" name="qty" onChange={this.handleQtyChange}/>
+          <input type="number" id="qty" name="qty" min="1" max="99" onChange={this.handleQtyChange} />
           <button type="submit" value="submit">Add</button>
         </form>
       </div>
-      
+
     )
   }
 }
