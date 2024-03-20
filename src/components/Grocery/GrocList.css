@@ -5,4 +5,12 @@
 }
 .list{
     width: 100%;
+    margin-bottom: 20px;
+}
+.newGrocForm{
+    width: 100%;
+    margin:auto;
+}
+.newGrocSubmit{
+    float:right;
 }

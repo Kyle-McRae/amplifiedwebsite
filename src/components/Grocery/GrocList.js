@@ -74,14 +74,14 @@ export default class GrocList extends React.Component {
               )
           }
         </div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className="newGrocForm">
           <label>
             Grocery:
             <input type="text" name="name" onChange={this.handleChange} />
           </label>
-          <label htmlFor="qty">Quantity</label>
+          <label htmlFor="qty">Quantity:</label>
           <input type="number" id="qty" name="qty" min="1" max="99" onChange={this.handleQtyChange} />
-          <button type="submit" value="submit">Add</button>
+          <button type="submit" value="submit" className="newGrocSubmit">Add</button>
         </form>
       </div>
 
