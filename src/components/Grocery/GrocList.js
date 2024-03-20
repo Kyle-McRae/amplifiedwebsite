@@ -70,7 +70,7 @@ export default class GrocList extends React.Component {
           {
             this.state.groceries
               .map(grocery =>
-                <Grocery grocery={grocery} del={this.handleDelete}></Grocery>
+                <Grocery grocery={grocery} del={this.handleDelete(grocery.Name.S)}></Grocery>
               )
           }
         </div>
