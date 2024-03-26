@@ -3,11 +3,11 @@ import axios from 'axios';
 import './Plot.css';
 
 
-export default function Plot ({data}){
-
+export default function Plot ({data, onClick}){
+  
   return(
     <div>
-  <button  onClick={del(grocery.Name.S)}>X</button>
+  <button onClick={onClick}>{data.crop} {data.timeLeft}</button>
   </div>
   )
 }
