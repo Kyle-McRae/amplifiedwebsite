@@ -6,7 +6,7 @@ const List = () => {
     <div>
     <GrocList/>
     <h2 className='main'>How it works</h2>
-    <p className='main'>This grocery list uses HTTP requests to recieve and send grocery data to my API. This API uses AWS API gateway to recieve requests, a Lambda function to handle the logic, and a DynamoDB table to store the data. When the page is first loaded, the Lambda scans the database for the grocery list, and later additions and deletions are sent to the database while the list is being used. </p>
+    <p className='main'>This grocery list uses HTTP requests to receive and send grocery data to my API. This API uses AWS API gateway to receive requests, a Lambda function to handle the logic, and a DynamoDB table to store the data. When the page is first loaded, the Lambda function scans the database for the grocery list. White using the list, additions and deletions are sent to the database and the website in parallel to create a seamless experience. </p>
     </div>
   );
 };
